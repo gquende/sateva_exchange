@@ -18,6 +18,10 @@ class ExchangeController extends GetxController {
 
     this.ivaComissaoCarregamento =
         this.value * exchangeSettings.taxaIVAComissaoCarregamento;
+
+    this.ivaComissaoPagamento =
+        this.value * exchangeSettings.taxaIVAComissaoCompra;
+    this.comissaoPagamento = this.value * exchangeSettings.taxaComissaoCompra;
   }
 
   double getEarns() {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sateva_exchange/pages/home.dart';
+import 'package:sateva_exchange/pages/result.dart';
 
 void main() {
   runApp(const App());
@@ -10,6 +11,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: Home());
+    return MaterialApp(
+        debugShowCheckedModeBanner: false, home: ResultExchange());
   }
 }
