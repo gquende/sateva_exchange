@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sateva_exchange/controllers/exchange_controller.dart';
 
 class ResultExchange extends StatelessWidget {
-  const ResultExchange({Key? key}) : super(key: key);
+  //const ResultExchange({Key? key}) : super(key: key);
+
+  ExchangeController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

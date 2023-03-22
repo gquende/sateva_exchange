@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:sateva_exchange/models/configuration.dart';
 
 class ExchangeController extends GetxController {
-  Exchange exchangeSettings;
+  ExchangeConfig exchangeSettings;
   double value;
   double? totalTaxValue;
   double? ivaComissaoCarregamento;
