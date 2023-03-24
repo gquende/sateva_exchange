@@ -15,6 +15,7 @@ dependencies:
   get:
   shared_preferences:
   get_it:
+  intl:
 
 dev_dependencies:
   flutter_test:

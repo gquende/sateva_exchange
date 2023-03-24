@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:sateva_exchange/controllers/exchange_controller.dart';
+import 'package:sateva_exchange/models/configuration.dart';
+import 'package:sateva_exchange/pages/result.dart';
+import 'package:sateva_exchange/pages/settings.dart';
 
 import '../utils/config.dart';
 
@@ -33,7 +37,14 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.only(left: 20, right: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text("Configuration")],
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Settings()));
+                      },
+                      child: Text("Configuration"))
+                ],
               ),
             ),
           ),
@@ -92,6 +103,20 @@ class _HomeState extends State<Home> {
                     debugPrint("Pesquisando por::: ${controller.text}");
 
                     if (_formKey.currentState!.validate()) {
+                      setState(() {
+                        carregando = true;
+                      });
+                      ExchangeController exchangeController =
+                          ExchangeController(
+                              exchangeSettings:
+                                  GetIt.instance.get<ExchangeConfig>(),
+                              value: double.parse(this.controller.text));
+
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ResultExchange(
+                                controller: exchangeController,
+                              )));
+
                       setState(() {
                         carregando = true;
                       });

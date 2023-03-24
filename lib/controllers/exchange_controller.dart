@@ -7,21 +7,44 @@ class ExchangeController extends GetxController {
   double? totalTaxValue;
   double? ivaComissaoCarregamento;
   double? comissaoCarregamento;
-  double? ivaComissaoPagamento;
-  double? comissaoPagamento;
+  double? ivaComissaoCompra;
+  double? comissaoCompra;
   double? valorACarregar;
   double? totalTaxaCarregamento;
-  double? totalTaxaPagamento;
+  double? totalTaxaCompra;
+  double? valorRealCompra;
+  double? lucro;
   ExchangeController({required this.exchangeSettings, required this.value}) {
+    this.valorRealCompra =
+        (this.value + this.value * exchangeSettings.taxaWise);
+
+    this.ivaComissaoCompra =
+        (this.valorRealCompra! * this.exchangeSettings.exchangeBuyValue) *
+            exchangeSettings.taxaIVAComissaoCompra;
+    this.comissaoCompra =
+        (this.valorRealCompra! * this.exchangeSettings.exchangeBuyValue) *
+            exchangeSettings.taxaComissaoCompra;
+
+    this.totalTaxaCompra = this.ivaComissaoCompra! + this.comissaoCompra!;
+
+    this.valorACarregar =
+        this.valorRealCompra! * exchangeSettings.exchangeBuyValue +
+            this.totalTaxaCompra!;
+
     this.comissaoCarregamento =
-        this.value * exchangeSettings.taxaComissaoCarregamento;
+        this.valorACarregar! * exchangeSettings.taxaComissaoCarregamento;
 
     this.ivaComissaoCarregamento =
-        this.value * exchangeSettings.taxaIVAComissaoCarregamento;
+        this.valorACarregar! * exchangeSettings.taxaIVAComissaoCarregamento;
 
-    this.ivaComissaoPagamento =
-        this.value * exchangeSettings.taxaIVAComissaoCompra;
-    this.comissaoPagamento = this.value * exchangeSettings.taxaComissaoCompra;
+    this.totalTaxaCarregamento =
+        this.comissaoCarregamento! + this.ivaComissaoCarregamento!;
+
+    this.totalTaxValue = this.totalTaxaCompra! + this.totalTaxaCarregamento!;
+
+    this.lucro = this.value * exchangeSettings.exchangeSellValue -
+        this.valorACarregar! -
+        this.totalTaxaCarregamento!;
   }
 
   double getEarns() {

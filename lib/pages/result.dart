@@ -1,51 +1,100 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:sateva_exchange/controllers/exchange_controller.dart';
 
 class ResultExchange extends StatelessWidget {
   //const ResultExchange({Key? key}) : super(key: key);
 
-  ExchangeController controller = Get.find();
+  ExchangeController controller;
+  var formatCurrency =
+      NumberFormat.simpleCurrency(locale: "pt_PT", name: "AOA");
+
+  ResultExchange({required this.controller});
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Exchange"),
+      ),
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Container(
-            height: size.height * 0.3,
-            child: Column(
-              children: [
-                Text("Valor a converter"),
-                Text(
-                  "20202",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                )
-              ],
-            ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 28.0, right: 10, left: 10),
+                child: Container(
+                  height: size.height * 0.3,
+                  width: size.width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Valor a converter"),
+                      Text(
+                        "${controller.valorRealCompra?.toPrecision(2)} EU | USD",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30),
+                      )
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 2),
+                            color: Colors.black12,
+                            spreadRadius: 3,
+                            blurRadius: 13)
+                      ]),
+                ),
+              ),
+              Container(
+                height: size.height * 0.6,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CardInformation(
+                        "Valor a carregar",
+                        formatCurrency.format(controller.valorACarregar
+                            ?.toPrecision(3) as double),
+                        context),
+                    CardInformation(
+                        "Taxa de Carregamento",
+                        formatCurrency.format(controller.totalTaxaCarregamento
+                            ?.toPrecision(3) as double),
+                        context),
+                    CardInformation(
+                        "Taxa de Compra",
+                        formatCurrency.format(controller.totalTaxaCompra
+                            ?.toPrecision(3) as double),
+                        context),
+                    CardInformation(
+                        "Total de taxas",
+                        formatCurrency.format(
+                            controller.totalTaxValue?.toPrecision(3) as double),
+                        context),
+                    CardInformation(
+                        "Lucro",
+                        formatCurrency
+                            .format(controller.lucro?.toPrecision(3) as double),
+                        context),
+                  ],
+                ),
+              )
+            ],
           ),
-          Container(
-            height: size.height * 0.6,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CardInformation("Teste", 10, context),
-                CardInformation("Teste", 10, context),
-                CardInformation("Teste", 10, context),
-                CardInformation("Teste", 10, context),
-                CardInformation("Teste", 10, context),
-              ],
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
 
-  Widget CardInformation(String title, double value, BuildContext context) {
+  Widget CardInformation(String title, String value, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       child: Container(
@@ -59,7 +108,7 @@ class ResultExchange extends StatelessWidget {
             children: [
               Text(title),
               Text(
-                "$value Kzs",
+                "$value",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ],

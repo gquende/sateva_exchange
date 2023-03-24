@@ -19,11 +19,12 @@ class Config {
     var inject = GetIt.instance;
 
     inject.registerLazySingleton(() => ExchangeConfig(
-        taxaComissaoCarregamento: 0.2,
-        taxaIVAComissaoCarregamento: 0.4,
-        taxaComissaoCompra: 5.6,
-        taxaIVAComissaoCompra: 5.6,
-        exchangeBuyValue: 6.0,
-        exchangeSellValue: 3.6));
+        taxaComissaoCarregamento: 0.02,
+        taxaIVAComissaoCarregamento: 0.0028,
+        taxaComissaoCompra: 0.03,
+        taxaIVAComissaoCompra: 0.0042,
+        exchangeBuyValue: 514,
+        exchangeSellValue: 585,
+        taxaWise: 0.0445));
   }
 }
